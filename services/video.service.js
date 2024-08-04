@@ -64,20 +64,4 @@ const getFilesUrlFromS3 = async (bucketName, fileName) => {
   }
 };
 
-const checkFileType = (file, cb) => {
-  try {
-    const filetypes = /mp4|mov|wmv|avi|mkv|webm/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-      return cb(null, true);
-    } else {
-      cb("Error: Video only! (mp4, mov, wmv, avi,mkv,webm)");
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
-module.exports = { getVideoDuration, uploadVideo, getFilesUrlFromS3, checkFileType };
+module.exports = { getVideoDuration, uploadVideo, getFilesUrlFromS3 };

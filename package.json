@@ -1,0 +1,35 @@
+{
+  "name": "video_files_apis",
+  "version": "1.0.0",
+  "description": "Nodejs Apis for manipulating video files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sarveshrajpure/video_files_apis.git"
+  },
+  "author": "Sarvesh Rajpure",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sarveshrajpure/video_files_apis/issues"
+  },
+  "homepage": "https://github.com/Sarveshrajpure/video_files_apis#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "http-status": "^1.7.4",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "sequelize-cli": "^6.6.2"
+  }
+}

@@ -25,7 +25,7 @@ const userController = {
       res.status(httpStatus.OK).send(newUser);
     } catch (err) {
       await t.rollback();
-      console.log(err);
+   
       next(err);
     }
   },

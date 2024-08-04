@@ -6,6 +6,7 @@ const app = express();
 require("dotenv").config();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // API ROUTE
 app.use("/api", routes);

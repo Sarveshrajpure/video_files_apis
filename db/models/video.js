@@ -1,10 +1,9 @@
 "use strict";
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
-const bcrypt = require("bcrypt");
-const video = require("./video");
-const user = sequelize.define(
-  "user",
+
+const video = sequelize.define(
+  "video",
   {
     id: {
       primaryKey: true,
@@ -15,16 +14,12 @@ const user = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    videoId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
-      type: DataTypes.STRING,
-      set(value) {
-        const hashPassword = bcrypt.hashSync(value, 10);
-        this.setDataValue("password", hashPassword);
-      },
+    userId: {
+      type: DataTypes.UUID,
       allowNull: false,
     },
     createdAt: {
@@ -42,9 +37,8 @@ const user = sequelize.define(
   {
     paranoid: true,
     freezeTableName: true,
-    modelName: "user",
+    modelName: "video",
   }
 );
-user.hasMany(video, { foreignKey: "userId" });
-video.belongsTo(user, { foreignKey: "userId" });
-module.exports = user;
+
+module.exports = video;

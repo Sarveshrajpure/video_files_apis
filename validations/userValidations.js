@@ -11,4 +11,14 @@ const userRegisterSchema = Joi.object({
     .required(),
 });
 
-module.exports = { userRegisterSchema };
+const userSigninSchema = Joi.object({
+  email: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+    .required(),
+  password: Joi.string()
+    .regex(passwordRegex)
+    .message(`Invalid password, please ensure :- ${passwordErrorMsg}`)
+    .required(),
+});
+
+module.exports = { userRegisterSchema, userSigninSchema };

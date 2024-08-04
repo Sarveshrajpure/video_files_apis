@@ -1,9 +1,10 @@
 const httpStatus = require("http-status");
 const user = require("../db/models/user");
-const { userRegisterSchema } = require("../validations/userValidations");
+const { userRegisterSchema, userSigninSchema } = require("../validations/userValidations");
 const { convertToApiError, ApiError } = require("../middlewares/errorHandlingMiddleware");
 const services = require("../services/index");
 const sequelize = require("../config/database");
+const bcrypt = require("bcrypt");
 
 const userController = {
   async registerUser(req, res, next) {
@@ -25,6 +26,24 @@ const userController = {
     } catch (err) {
       await t.rollback();
       console.log(err);
+      next(err);
+    }
+  },
+  async signinUser(req, res, next) {
+    try {
+      let values = await userSigninSchema.validateAsync(req.body);
+
+      let userExists = await services.userService.findUserByEmail(values.email);
+
+      if (userExists === false || !(await bcrypt.compare(values.password, userExists.password))) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, "Email or Password Incorrect");
+      }
+
+      const token = services.userService.generateToken({ id: userExists.id });
+      delete userExists.password;
+      delete userExists.deletedAt;
+      res.status(httpStatus.OK).send({ userExists, token });
+    } catch (err) {
       next(err);
     }
   },

@@ -1,6 +1,12 @@
 const httpStatus = require("http-status");
 const user = require("../db/models/user");
 const { ApiError } = require("../middlewares/errorHandlingMiddleware");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const generateToken = (payload) => {
+  return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRES_IN });
+};
 
 const checkUserExists = async (email) => {
   try {
@@ -17,4 +23,18 @@ const checkUserExists = async (email) => {
   }
 };
 
-module.exports = { checkUserExists };
+const findUserByEmail = async (email) => {
+  try {
+    let fetchedUser = await user.findOne({ where: { email }, raw: true });
+
+    if (fetchedUser !== null) {
+      return fetchedUser;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { checkUserExists, findUserByEmail, generateToken };

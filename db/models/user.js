@@ -12,9 +12,11 @@ const user = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
@@ -22,6 +24,7 @@ const user = sequelize.define(
         const hashPassword = bcrypt.hashSync(value, 10);
         this.setDataValue("password", hashPassword);
       },
+      allowNull: false,
     },
     createdAt: {
       allowNull: false,

@@ -1,12 +1,22 @@
 const express = require("express");
 const sequelize = require("./config/database");
+const { convertToApiError, handleError } = require("./middlewares/errorHandlingMiddleware");
+const routes = require("./routes/index");
 const app = express();
+require("dotenv").config();
 
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
+// API ROUTE
+app.use("/api", routes);
 
-console.log(port);
+//API ERROR HANDLING
+app.use(convertToApiError);
+app.use((err, req, res, next) => {
+  handleError(err, res);
+});
+
+const port = process.env.PORT;
 
 const connectDb = async () => {
   console.log("Checking database connection...");

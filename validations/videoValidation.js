@@ -16,4 +16,17 @@ const uploadVideoSchema = Joi.object({
   }).required(),
 });
 
-module.exports = { uploadVideoSchema };
+const trimVideoSchema = Joi.object({
+  id: Joi.string().uuid().required(),
+  trimFrom: Joi.string().required(),
+  trimDuration: Joi.number().required(),
+});
+
+const concatenateVideoSchema = Joi.object({
+  nameForConcatVideo: Joi.string().required(),
+  videoIds: Joi.array().items(Joi.string()).required(),
+});
+
+const getVideoLinkSchema = Joi.object({ id: Joi.string().uuid() });
+
+module.exports = { uploadVideoSchema, trimVideoSchema, concatenateVideoSchema, getVideoLinkSchema };

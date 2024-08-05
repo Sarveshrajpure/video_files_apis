@@ -7,7 +7,7 @@ const bucket_region = process.env.BUCKET_REGION;
 const access_key = process.env.ACCESS_KEY;
 const secret_access_key = process.env.SECRET_ACCESS_KEY;
 
-const s3Client = new S3Client({
+const s3 = new S3Client({
   credentials: {
     accessKeyId: access_key,
     secretAccessKey: secret_access_key,
@@ -15,4 +15,4 @@ const s3Client = new S3Client({
   region: bucket_region,
 });
 
-module.exports = { s3Client };
+module.exports = { s3 };

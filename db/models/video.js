@@ -22,6 +22,10 @@ const video = sequelize.define(
       type: DataTypes.UUID,
       allowNull: false,
     },
+    videoResolution: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,

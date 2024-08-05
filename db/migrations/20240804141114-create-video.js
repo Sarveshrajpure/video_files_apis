@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
+      videoResolution: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

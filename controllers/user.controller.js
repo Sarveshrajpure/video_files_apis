@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
 const user = require("../db/models/user");
 const { userRegisterSchema, userSigninSchema } = require("../validations/userValidations");
-const { convertToApiError, ApiError } = require("../middlewares/errorHandlingMiddleware");
+const { ApiError } = require("../middlewares/errorHandlingMiddleware");
 const services = require("../services/index");
 const sequelize = require("../config/database");
 const bcrypt = require("bcrypt");
@@ -24,8 +24,11 @@ const userController = {
 
       res.status(httpStatus.OK).send(newUser);
     } catch (err) {
+      console.log(err);
       await t.rollback();
-   
+      if (err.name === "ValidationError") {
+        err.statusCode = httpStatus.BAD_REQUEST;
+      }
       next(err);
     }
   },
@@ -44,6 +47,9 @@ const userController = {
       delete userExists.deletedAt;
       res.status(httpStatus.OK).send({ userExists, token });
     } catch (err) {
+      if (err.name === "ValidationError") {
+        err.statusCode = httpStatus.BAD_REQUEST;
+      }
       next(err);
     }
   },

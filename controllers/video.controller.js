@@ -208,11 +208,10 @@ const videoController = {
       }
 
       if (downloadPaths.length > 0) {
+        downloadPaths.forEach(async (paths) => {
+          await unlinkAsync(paths);
+        });
       }
-
-      downloadPaths.forEach(async (paths) => {
-        await unlinkAsync(paths);
-      });
 
       if (err.name === "ValidationError") {
         err.statusCode = httpStatus.BAD_REQUEST;
